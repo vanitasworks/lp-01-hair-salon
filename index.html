@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HAIR STUDIO BLOOM | 恵比寿の美容院</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #1a1a1a;
+      --gold: #c9a96e;
+      --cream: #faf8f4;
+      --gray: #888;
+      --light: #f5f3ee;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif;
+      color: var(--black);
+      background: var(--cream);
+      line-height: 1.8;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      background: rgba(250,248,244,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(201,169,110,0.2);
+    }
+
+    .nav-logo {
+      font-size: 1.4rem;
+      letter-spacing: 0.3em;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      color: var(--gray);
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 64px;
+    }
+
+    .hero-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      margin-bottom: 24px;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.3;
+      letter-spacing: 0.05em;
+      margin-bottom: 32px;
+    }
+
+    .hero-title span { color: var(--gold); }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--gray);
+      margin-bottom: 48px;
+      line-height: 2;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 40px;
+      background: var(--black);
+      color: white;
+      text-decoration: none;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      transition: all 0.3s;
+    }
+
+    .btn::after {
+      content: '→';
+      transition: transform 0.3s;
+    }
+
+    .btn:hover { background: var(--gold); }
+    .btn:hover::after { transform: translateX(4px); }
+
+    .hero-image {
+      position: relative;
+      overflow: hidden;
+      background: var(--light);
+    }
+
+    .hero-image-inner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #e8e0d0 0%, #d4c9b5 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      filter: grayscale(20%);
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 40px;
+      left: -20px;
+      background: var(--gold);
+      color: white;
+      padding: 16px 32px;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== CONCEPT ===== */
+    .concept {
+      padding: 120px 64px;
+      text-align: center;
+      background: var(--black);
+      color: white;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      color: var(--gold);
+      margin-bottom: 24px;
+      font-family: 'Helvetica Neue', sans-serif;
+      display: block;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      margin-bottom: 32px;
+      letter-spacing: 0.05em;
+    }
+
+    .concept-text {
+      max-width: 600px;
+      margin: 0 auto;
+      color: rgba(255,255,255,0.7);
+      line-height: 2.2;
+    }
+
+    /* ===== MENU ===== */
+    .menu {
+      padding: 120px 64px;
+      background: var(--cream);
+    }
+
+    .menu-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .menu-item {
+      background: var(--light);
+      padding: 48px 32px;
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .menu-item:hover {
+      background: var(--gold);
+      color: white;
+    }
+
+    .menu-item:hover .menu-price { color: white; }
+
+    .menu-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .menu-name {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      letter-spacing: 0.1em;
+    }
+
+    .menu-price {
+      font-family: 'Helvetica Neue', sans-serif;
+      color: var(--gold);
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      transition: color 0.3s;
+    }
+
+    .menu-note {
+      font-size: 0.75rem;
+      color: var(--gray);
+      transition: color 0.3s;
+    }
+
+    .menu-item:hover .menu-note { color: rgba(255,255,255,0.8); }
+
+    /* ===== STYLIST ===== */
+    .stylist {
+      padding: 120px 64px;
+      background: var(--black);
+      color: white;
+    }
+
+    .stylist-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .stylist-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .stylist-card {
+      text-align: center;
+    }
+
+    .stylist-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: #2a2a2a;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    .stylist-role {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      margin-bottom: 8px;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    .stylist-name {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      letter-spacing: 0.1em;
+    }
+
+    .stylist-desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.8;
+    }
+
+    /* ===== VOICE ===== */
+    .voice {
+      padding: 120px 64px;
+      background: var(--light);
+    }
+
+    .voice-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .voice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .voice-card {
+      background: white;
+      padding: 40px 32px;
+      position: relative;
+    }
+
+    .voice-stars {
+      color: var(--gold);
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+    }
+
+    .voice-text {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: var(--black);
+      margin-bottom: 24px;
+    }
+
+    .voice-author {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    /* ===== ACCESS ===== */
+    .access {
+      padding: 120px 64px;
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .access-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      color: var(--gold);
+      margin-bottom: 24px;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    .access-heading {
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
+
+    .access-info dt {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 4px;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    .access-info dd {
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+      padding-left: 0;
+    }
+
+    .map-placeholder {
+      background: var(--light);
+      height: 100%;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== CTA ===== */
+    .cta {
+      padding: 120px 64px;
+      background: var(--gold);
+      text-align: center;
+      color: white;
+    }
+
+    .cta-title {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      margin-bottom: 16px;
+    }
+
+    .cta-sub {
+      margin-bottom: 48px;
+      opacity: 0.85;
+    }
+
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 48px;
+      background: white;
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Helvetica Neue', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      transition: all 0.3s;
+    }
+
+    .btn-white:hover { background: var(--black); color: white; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--black);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 40px;
+      font-size: 0.8rem;
+      font-family: 'Helvetica Neue', sans-serif;
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+
+      .hero { grid-template-columns: 1fr; }
+      .hero-content { padding: 40px 24px; }
+      .hero-image { height: 300px; }
+
+      .concept, .menu, .stylist, .voice, .cta { padding: 80px 24px; }
+
+      .menu-grid { grid-template-columns: 1fr; gap: 2px; }
+      .stylist-grid { grid-template-columns: 1fr; gap: 40px; }
+      .voice-grid { grid-template-columns: 1fr; }
+
+      .access {
+        grid-template-columns: 1fr;
+        padding: 80px 24px;
+        gap: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">BLOOM</a>
+    <ul class="nav-links">
+      <li><a href="#concept">CONCEPT</a></li>
+      <li><a href="#menu">MENU</a></li>
+      <li><a href="#stylist">STYLIST</a></li>
+      <li><a href="#access">ACCESS</a></li>
+      <li><a href="#cta">RESERVE</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-label">HAIR STUDIO BLOOM / EBISU</span>
+      <h1 class="hero-title">
+        あなたの美しさを<br>
+        <span>引き出す</span>、<br>
+        上質な時間。
+      </h1>
+      <p class="hero-desc">
+        恵比寿の隠れ家サロン。<br>
+        一人ひとりの骨格・髪質・ライフスタイルに寄り添い、<br>
+        本当に似合うスタイルをご提案します。
+      </p>
+      <a href="#cta" class="btn">ご予約はこちら</a>
+    </div>
+    <div class="hero-image">
+      <div class="hero-image-inner">💇</div>
+      <div class="hero-badge">恵比寿駅 徒歩3分</div>
+    </div>
+  </section>
+
+  <!-- CONCEPT -->
+  <section class="concept" id="concept">
+    <span class="section-label">CONCEPT</span>
+    <h2 class="section-title">似合うを科学する</h2>
+    <p class="concept-text">
+      BLOOMは、流行を追うのではなく<br>
+      「あなたに本当に似合うもの」を探求するサロンです。<br><br>
+      骨格診断・顔型分析・パーソナルカラーを組み合わせ、<br>
+      データと感性の両面からスタイルを設計します。<br>
+      施術後、거울を見た瞬間の「これが私だ」という感覚を大切にしています。
+    </p>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu" id="menu">
+    <div class="menu-header">
+      <span class="section-label">MENU</span>
+      <h2 class="section-title">メニュー</h2>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <span class="menu-icon">✂️</span>
+        <div class="menu-name">カット</div>
+        <div class="menu-price">¥6,600</div>
+        <div class="menu-note">シャンプー・ブロー込み</div>
+      </div>
+      <div class="menu-item">
+        <span class="menu-icon">🎨</span>
+        <div class="menu-name">カラー</div>
+        <div class="menu-price">¥11,000〜</div>
+        <div class="menu-note">全体・リタッチ・ハイライト</div>
+      </div>
+      <div class="menu-item">
+        <span class="menu-icon">💫</span>
+        <div class="menu-name">パーマ</div>
+        <div class="menu-price">¥13,200〜</div>
+        <div class="menu-note">デジタルパーマ含む</div>
+      </div>
+      <div class="menu-item">
+        <span class="menu-icon">✨</span>
+        <div class="menu-name">トリートメント</div>
+        <div class="menu-price">¥5,500〜</div>
+        <div class="menu-note">髪質改善・艶出し</div>
+      </div>
+      <div class="menu-item">
+        <span class="menu-icon">👰</span>
+        <div class="menu-name">ヘアセット</div>
+        <div class="menu-price">¥8,800〜</div>
+        <div class="menu-note">結婚式・成人式</div>
+      </div>
+      <div class="menu-item">
+        <span class="menu-icon">🌟</span>
+        <div class="menu-name">フルコース</div>
+        <div class="menu-price">¥22,000〜</div>
+        <div class="menu-note">カット＋カラー＋Tr</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STYLIST -->
+  <section class="stylist" id="stylist">
+    <div class="stylist-header">
+      <span class="section-label">STYLIST</span>
+      <h2 class="section-title">スタイリスト</h2>
+    </div>
+    <div class="stylist-grid">
+      <div class="stylist-card">
+        <div class="stylist-photo">👩</div>
+        <div class="stylist-role">DIRECTOR</div>
+        <div class="stylist-name">田中 美咲</div>
+        <p class="stylist-desc">パリ・ロンドンでの経験を持つ。骨格診断とカラー理論を融合した独自スタイルが人気。</p>
+      </div>
+      <div class="stylist-card">
+        <div class="stylist-photo">👨</div>
+        <div class="stylist-role">TOP STYLIST</div>
+        <div class="stylist-name">佐藤 健太</div>
+        <p class="stylist-desc">メンズスタイリングのエキスパート。ビジネス〜カジュアルまで幅広く対応。</p>
+      </div>
+      <div class="stylist-card">
+        <div class="stylist-photo">👩</div>
+        <div class="stylist-role">STYLIST</div>
+        <div class="stylist-name">山本 あやか</div>
+        <p class="stylist-desc">カラーの繊細な表現を得意とする。韓国トレンドを取り入れたスタイルが得意。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOICE -->
+  <section class="voice" id="voice">
+    <div class="voice-header">
+      <span class="section-label" style="color:var(--gold)">VOICE</span>
+      <h2 class="section-title">お客様の声</h2>
+    </div>
+    <div class="voice-grid">
+      <div class="voice-card">
+        <div class="voice-stars">★★★★★</div>
+        <p class="voice-text">初めてお願いしましたが、骨格から丁寧に説明してくださって感動しました。仕上がりも最高で、周りに褒められました！</p>
+        <div class="voice-author">30代 / 会社員 / K.S様</div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-stars">★★★★★</div>
+        <p class="voice-text">カラーが絶妙で、毎回「今回が一番好き」と思います。色持ちも良くてコスパ最高です。</p>
+        <div class="voice-author">20代 / フリーランス / A.M様</div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-stars">★★★★★</div>
+        <p class="voice-text">予約が取りにくいのが難点ですが、それでも通い続けたいくらい技術が高い。癒しの空間です。</p>
+        <div class="voice-author">40代 / 主婦 / N.T様</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCESS -->
+  <section style="padding: 120px 64px; background: var(--cream);" id="access">
+    <div class="access" style="padding: 0; margin: 0; max-width: 960px; margin: 0 auto;">
+      <div>
+        <div class="access-title">ACCESS</div>
+        <h2 class="access-heading">アクセス</h2>
+        <dl class="access-info">
+          <dt>SALON NAME</dt>
+          <dd>HAIR STUDIO BLOOM</dd>
+          <dt>ADDRESS</dt>
+          <dd>東京都渋谷区恵比寿1-2-3 BLOOMビル2F</dd>
+          <dt>TEL</dt>
+          <dd>03-XXXX-XXXX</dd>
+          <dt>OPEN</dt>
+          <dd>10:00 〜 20:00（最終受付 18:30）</dd>
+          <dt>CLOSE</dt>
+          <dd>毎週火曜日・第3月曜日</dd>
+          <dt>ACCESS</dt>
+          <dd>JR恵比寿駅 西口より徒歩3分</dd>
+        </dl>
+      </div>
+      <div class="map-placeholder">
+        [ MAP ]
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="cta">
+    <h2 class="cta-title">まずはお気軽にご予約を</h2>
+    <p class="cta-sub">初回限定 カット20%OFF実施中</p>
+    <a href="#" class="btn-white">WEB予約はこちら</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2024 HAIR STUDIO BLOOM. ALL RIGHTS RESERVED.</p>
+  </footer>
+
+</body>
+</html>
